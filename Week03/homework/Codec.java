@@ -1,6 +1,8 @@
 package examsTest.week3;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -114,5 +116,61 @@ public class Codec {
 
             return new TreeNode(Integer.parseInt(node));
         }
+    }
+
+
+
+
+
+    // Encodes a tree to a single string.DFS
+    public String serialize2(TreeNode root) {
+
+        // terminator
+        if (root == null) return "null,";
+
+        // process and drill down
+        String left = serialize2(root.left);
+        String right = serialize2(root.right);
+        String val = String.valueOf(root.val);
+
+        // merge
+        return  val + "," + left + right;
+
+
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize2(String data) {
+
+        // prepare data
+        String[] datas = data.split(",");
+
+        List<String> dataList = new LinkedList(Arrays.asList(datas));
+        return rdeserialize(dataList);
+
+
+
+    }
+
+    private TreeNode rdeserialize(List<String> dataList) {
+
+        // terminator
+        if (dataList.get(0).equals("null")) {
+            dataList.remove(0);
+            return null;
+        }
+
+        // process
+
+        TreeNode root = new TreeNode(Integer.parseInt(dataList.get(0)));
+        dataList.remove(0);
+
+
+        // drill down
+        root.left = rdeserialize(dataList);
+        root.right = rdeserialize(dataList);
+
+        // merge
+        return root;
     }
 }
