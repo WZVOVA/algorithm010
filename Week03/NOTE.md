@@ -211,3 +211,47 @@ public void divideConquer(Problem problem, int param, int result) {
 
 
 
+
+
+
+
+
+
+
+
+class Solution:
+
+    def solveNQueens(self, n: int) -> List[List[str]]:
+
+        result = []
+
+        self.DFS([], [], [], n, result)
+
+        return [["."*i + "Q" + "."*(n-i-1) for i in sol]for sol in result]
+
+    # xy_dif是na, xy_sum是pie
+
+    def DFS(self, queens, xy_dif, xy_sum, length, result):
+
+        # 当前行
+
+        p = len(queens)
+
+        if p == length:
+
+            result.append(queens)
+
+            return
+
+        
+
+        for q in range(length):
+
+            if q in queens or p-q in xy_dif or p+q in xy_sum:
+
+                continue
+
+            self.DFS(queens+[q], xy_dif+[p-q], xy_sum+[p+q], length, result) 
+
+
+
